@@ -62,7 +62,7 @@ module.exports = new (class AutoMod extends Client {
             if(isNaN(parse)) parse = 0;
             if(duration <= parse) {
                 this.console(`[GUILD:${member.guild.name}]: (ALERT) Member joined: ${member.user.tag} (${member.id}) has joined with ${duration} days.`);
-                return this.action(member, `Account age is below ${parse} day(s)`, "Ban");
+                return this.action(member, `Account age is below ${parse} day(s)`, process.env.ACTION_TYPE ?? "Ban");
             };
         });
     };
