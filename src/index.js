@@ -24,8 +24,10 @@ for (const r of [ "TOKEN", "log", "DEV_TIME", "GUILD_ID", "DAYS", "ACTION_TYPE" 
     }
 
 };
-
-const { Client } = require("discord.js");
+const [ { Client }, defaultReason ] = [
+    require("discord.js"),
+    `Account age was below ${process.env.DAYS ?? 0} day(s)`
+];
 
 module.exports = new (class AutoMod extends Client {
     constructor(){
@@ -62,14 +64,14 @@ module.exports = new (class AutoMod extends Client {
             if(isNaN(parse)) parse = 0;
             if(duration <= parse) {
                 this.console(`[GUILD:${member.guild.name}]: (ALERT) Member joined: ${member.user.tag} (${member.id}) has joined with ${duration} days.`);
-                return this.action(member, `Account age is below ${parse} day(s)`, process.env.ACTION_TYPE ?? "Ban");
+                return this.action(member, defaultReason, process.env.ACTION_TYPE ?? "Ban");
             };
         });
     };
     /**
      * @param {import("discord.js").GuildMember} member 
      */
-    async action(member, reason = "Account age was below 1 day", action = "Ban") {
+    async action(member, reason = defaultReason, action = "Ban") {
         const log = async () => {
             return new (require("discord-hook"))(process.env.log, { username: member.guild.name, avatar_url: member.guild.iconURL({ format: "png" }) })
             .embed({
@@ -95,7 +97,7 @@ module.exports = new (class AutoMod extends Client {
                     },
                     {
                         name: "Reason",
-                        value: reason ?? "Account age was below 1 day",
+                        value: reason ?? defaultReason,
                         inline: false
                     }
                 ]
