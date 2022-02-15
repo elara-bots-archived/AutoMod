@@ -1,3 +1,9 @@
+# This repo and any bots using it will not work after April 30th 2022, following the announcement made by Discord staff
+# [READ THIS](https://github.com/discord/discord-api-docs/discussions/4510)
+## Anything using the v6/v7 API endpoints will either need to be upgraded to v9 or v10, if not it will not work after the date above!
+
+
+
 # AutoMod Discord Bot
 What does this bot do?. 
 It bans or kicks new Discord accounts within certain day(s)
